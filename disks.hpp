@@ -24,13 +24,14 @@
 
 enum disk_color { DISK_LIGHT, DISK_DARK}; // pattern of our vectors 
 
-class disk_state {
+class disk_state 
+{
 private:
   std::vector<disk_color> _colors;
-
+ 
 public:
   disk_state(size_t light_count)
-    : _colors(light_count * 2, DISK_LIGHT) {
+  : _colors(light_count * 2, DISK_LIGHT) {
 
     assert(light_count > 0);
 
@@ -186,7 +187,7 @@ sorted_disks sort_lawnmower(const disk_state& before) // before is already in th
     disk_state state = before; // accessing the class
   	int numOfSwap = 0;
 
-    while(!state.is_sorted()) 
+    while(!state.is_sorted()) // 
     {
       for(int ix = 0; ix < state.total_count() - 1; ix++)
       {
@@ -203,13 +204,14 @@ sorted_disks sort_lawnmower(const disk_state& before) // before is already in th
         {
           return sorted_disks(disk_state(state), numOfSwap);
           // return sorted_disk(numofswap);
+          // return sorted_disks(state, numofsawp)
         }
 
       for (int iz = state.total_count() - 2; iz > 1; iz--)
-      {
+      { // total_count is number of all light and dark in the list 
         if (state.get(iz) == DISK_LIGHT && state.get(iz - 1) != DISK_LIGHT)
         {
-          state.swap(iz - 1);
+          state.swap(iz - 1);// to swap the next to index iz-2
           numOfSwap++; 
         }
         
@@ -217,5 +219,8 @@ sorted_disks sort_lawnmower(const disk_state& before) // before is already in th
 
     }
   
-  return sorted_disks(disk_state(state), numOfSwap);
+  return sorted_disks(disk_state(state), numOfSwap); // when its sorted 
+  // we are returning the state if its before or after. 
+  // this return means when when the while loop breaks or its false its sorted 
+  // return the diskstate and number of swap 
 }
