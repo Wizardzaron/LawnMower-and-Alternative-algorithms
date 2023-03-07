@@ -13,7 +13,7 @@ int main() {
 
   Rubric rubric;
 
-  const disk_state alt_one(1), alt_three(3);
+  const disk_state alt_one(1), alt_three(3); // referencing loanmoers is alt_one(1) and alt_three(3) for alternative 
 
   auto sorted_one(alt_one);    
     //  std::cout << sorted_one.to_string() << std::endl;

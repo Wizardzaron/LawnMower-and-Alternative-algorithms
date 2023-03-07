@@ -22,7 +22,7 @@
 #include <functional>
 #include <iostream>
 
-enum disk_color { DISK_LIGHT, DISK_DARK};
+enum disk_color { DISK_LIGHT, DISK_DARK}; // pattern of our vectors 
 
 class disk_state {
 private:
@@ -111,45 +111,31 @@ public:
 
   // Return true when this disk_state is fully sorted, with all light disks on
   // the left (low indices) and all dark disks on the right (high indices).
-  bool is_sorted() const {
-      
-    //int middle_man = std::distance(_colors.begin(),_colors.end()) / 2
-    //We are splitting the vector in half
-    int middle_man = _colors.size();  
 
-    /*
-    we create two vectors one holds the first half of the vector and the other holds the
-    second half. In order to make sure that they only copy their respective parts we 
-    use the middle man to put up our borders
-    */
-    std::vector<std::string> white_test(_colors.begin(), _colors.begin() + middle_man);
-    std::vector<std::string> dark_test(_colors.begin() + middle_man, _colors.end());
-    
-    std::string white_check = "white";
-    std::string white_check_cap = "White";
-    
-    std::string dark_check = "dark";
-    std::string dark_check_cap = "Dark";
-    std::string black_check = "black";
-    std::string black_check_cap = "Black";
-
-    for (int ix = 0; ix < white_test.size(); ix++){
-
-      if (white_test[ix] != white_check || white_test[ix] != white_check_cap){
-
-        return false;
-      }
-    }
-
-    for (int iz = 0; iz < dark_test.size(); iz++){
-
-      if(dark_test[iz] != dark_check || dark_test[iz] != dark_check_cap || dark_test[iz] != black_check || dark_test[iz] != black_check_cap){
-
+  bool is_sorted() const // will call this function everytime we finsh iterating through a line  
+  { // for loan moers and alternative 
+    int middleMan = _colors.size() / 2; // gives the middle index
+    // semi binary search
+    for (int ix = 0; ix < middleMan; ix++)
+    {
+      if (_colors[ix] != DISK_LIGHT)
+      {
         return false;
       }
 
     }
 
+
+    for(int iz = middleMan; iz < _colors.size(); iz++)
+    {
+
+      if (_colors[iz] != DISK_DARK)
+      {
+        return false;
+      }
+
+
+    }
 
     return true;
   }
@@ -181,7 +167,10 @@ public:
 };
 
 // Algorithm that sorts disks using the alternate algorithm.
-sorted_disks sort_alternate(const disk_state& before) {
+sorted_disks sort_alternate(const disk_state& before) 
+{
+
+  disk_state state = before;
 	int numOfSwap = 0; //record # of step swap
 
 
@@ -192,8 +181,41 @@ sorted_disks sort_alternate(const disk_state& before) {
 
 
 // Algorithm that sorts disks using the lawnmower algorithm.
-sorted_disks sort_lawnmower(const disk_state& before) {
+sorted_disks sort_lawnmower(const disk_state& before) // before is already in the member function of disk state class 
+{
+    disk_state state = before; // accessing the class
   	int numOfSwap = 0;
+
+    while(!state.is_sorted()) 
+    {
+      for(int ix = 0; ix < state.total_count() - 1; ix++)
+      {
+        if (state.get(ix) == DISK_DARK && state.get(ix + 1) != DISK_DARK)
+        {
+          state.swap(ix);
+          numOfSwap++;
+        }
+
+
+      }
+
+        if(state.is_sorted())
+        {
+          return sorted_disks(disk_state(state), numOfSwap);
+          // return sorted_disk(numofswap);
+        }
+
+      for (int iz = state.total_count() - 2; iz > 1; iz--)
+      {
+        if (state.get(iz) == DISK_LIGHT && state.get(iz - 1) != DISK_LIGHT)
+        {
+          state.swap(iz - 1);
+          numOfSwap++; 
+        }
+        
+      }
+
+    }
   
   return sorted_disks(disk_state(state), numOfSwap);
 }
