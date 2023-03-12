@@ -172,7 +172,26 @@ sorted_disks sort_alternate(const disk_state& before)
 {
 
   disk_state state = before;
+  int startAt = 0, endAt = state.total_count() - 1;
 	int numOfSwap = 0; //record # of step swap
+
+  while(startAt < endAt && !state.is_sorted())
+  {
+    for (int ix = startAt; ix < endAt; ix = ix + 2)
+    {
+      if(state.get(ix) == DISK_DARK && state.get(ix + 1) != DISK_DARK)
+      {
+
+          state.swap(ix);
+          numOfSwap++;
+      }
+    }
+
+    startAt++;
+    endAt--;
+
+
+  }
 
 
      
