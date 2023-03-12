@@ -1,5 +1,8 @@
 Ryan Haddadi
+mochi456@csu.fullerton.edu
+
 Naeem Khayat Albirkdar
+arnaeem@csu.fullerton.edu
 
 PSEUDOCODE:
 # sort_alternate
