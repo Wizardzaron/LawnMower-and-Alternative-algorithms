@@ -10,8 +10,7 @@ PSEUDOCODE:
 set start_at to first disk
 set end_at to last_disk-1
 
-while start_at less than end_at and not IS_SORTED
- 
+while start_at less than end_at and not IS_SORTED 
  for every other disk in the list from start_at to end_at
     
        
@@ -30,9 +29,7 @@ while start_at less than end_at and not IS_SORTED
 end while
 
 # sort_lawnmower
-while not IS_SORTED
-
-  
+while not IS_SORTED  
   for each disk from left to right 
   
     if disk is black and adjacent[+1] disk isn't black
